@@ -1,62 +1,36 @@
+// Copyright 2022 Robot Locomotion Group @ CSAIL. All rights reserved.
+// All components of Drake are licensed under the GNU License.
+// Programmer: Martin Montas, martinmontas1@gmail.com
 #include <ncurses.h>
 
 #include "game.h"
 
 
-//using namespace std;
 
 bool RUNNING;                   // runs the main loop
-///////////////////////////////////////////////
-//
-//        get_dir
-///////////////////////////////////////////////
-
 void get_dir(Game *g) {
-    /*
-        gets the
-
-
-    */
-
     int in = getch();
 
     // here we take input of the player
     if (in == 'q') {
-
         RUNNING = false;
-
-    }
-
-    else {
-
+    } else {
         // moves the player
         g->move_player(in);
     }
-
 }
-
-///////////////////////////////////////////////
-//
-//        MAIN FUNCTION 
-///////////////////////////////////////////////
 int main() {
-
-    //the main loop bool
+    // the main loop bool
     RUNNING = true;
 
-    // calls the game and initiates ncurses 
+    // calls the game and initiates ncurses
     // inits in its constructor
-    Game *g= new Game;
+    Game *g = new Game;
 
-    do{
-
+    do {
         // this FUNCTION should be should be multi-threaded
         get_dir(g);
-
     }while(RUNNING);
-
-
     g->~Game();
     return 0;
-
 }
