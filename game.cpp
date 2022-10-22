@@ -7,6 +7,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+
 ///////////////////////////////////////////////////////
 //
 //      print the map of the along with the
@@ -14,8 +15,6 @@
 //
 ///////////////////////////////////////////////////////
 Game::Game() {
-    // this is the contructor that initializes the ncurses screen and
-    // the playing window
     initscr();
     cbreak();
     noecho();
@@ -41,7 +40,6 @@ Game::Game() {
 ///////////////////////////////////////////////////////
 void Game::move_player(int in) {
     if (in == 'l') {
-        /* goes to the right */
         mvwaddch(win, y, x, ' ');
         wrefresh(win);
         x++;
@@ -59,7 +57,6 @@ void Game::move_player(int in) {
         }
     }
     if (in == 'j') {
-        /* goes to the down */
         mvwaddch(win, y, x, ' ');
         wrefresh(win);
         y++;
@@ -67,15 +64,12 @@ void Game::move_player(int in) {
             y--; }
     }
     if (in == 'h') {
-        /* goes to the left */
         mvwaddch(win, y, x, ' ');
         wrefresh(win);
         x--;
         if (x < 1)
             x++;
     }
-    /* moves to the player
-     * char to the correct place */
     mvwaddch(win, y, x, '@');
     wrefresh(win);
 }
@@ -86,7 +80,6 @@ void Game::move_player(int in) {
 //
 ///////////////////////////////////////////////////////
 Game::~Game() {
-    // GAME OVER!!!
     getch();
     endwin();
 }
@@ -98,20 +91,12 @@ Game::~Game() {
 //
 ///////////////////////////////////////////////////////
 void Game::print_map(std::string name_of_text_file) {
-    // this loop starts at the given corner where the x coodinate is
-    // and continues  until width of the screen
-
     std::ifstream stream(name_of_text_file);
     std::string line;
 
     while (stream) {
     getline(stream , line);
     if (stream) {
-        // streams when used in a boolean context are
-        // converted to a type that is usable in that context.
-        // If the stream is in a good state the object returned can
-        // be used as true
-
         mvwprintw(win, 0, 1, "%s", line.c_str());
       }
     }
