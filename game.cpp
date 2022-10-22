@@ -6,7 +6,7 @@
 #include <cstring>
 #include <string>
 #include "game.h"
-
+#include <fstream>
 ///////////////////////////////////////////////////////
 //
 //      print the map of the along with the
@@ -14,7 +14,6 @@
 //
 ///////////////////////////////////////////////////////
 Game::Game() {
-    string map_00[11] = {
     // this is the contructor that initializes the ncurses screen and
     // the playing window
     initscr();
@@ -30,7 +29,8 @@ Game::Game() {
     box(win, 0, 0);
     refresh();
     wrefresh(win);
-    print_map(map_00);
+    std::string tmp = "maps/map00.txt";
+    print_map(tmp);
 }
 
 ///////////////////////////////////////////////////////
@@ -97,16 +97,24 @@ Game::~Game() {
 //      enemies
 //
 ///////////////////////////////////////////////////////
-void Game::print_map(string map[11]) {
+void Game::print_map(std::string name_of_text_file) {
     // int ind = 0;
     // this loop starts at the given corner where the x coodinate is
     // and continues  until width of the screen
-    for (int row=0; row < height ; row++) {
-      // equals the current row
-      string curr_str = map[row];
-      for (int _char = 0; _char < curr_str.size() ; _char++) {
-        // puts in the given window
-        mvwaddch(win, row, _char, curr_str[_char]);
+
+    std::ifstream stream(name_of_text_file);
+    std::string line;
+
+    while (stream) {
+    getline(stream , line);
+    if (stream) {
+        // streams when used in a boolean context are
+        // converted to a type that is usable in that context.
+        // If the stream is in a good state the object returned can
+        // be used as true
+
+        // Only write to cout if the getline did not fail.
+        mvwprintw(win, 0, 1, "%s", line.c_str());
+      }
     }
   }
-}
