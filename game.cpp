@@ -1,12 +1,12 @@
 // Copyright 2022 Robot Locomotion Group @ CSAIL. All rights reserved.
 // All components of Drake are licensed under the GNU License.
 // Programmer: Martin Montas, martinmontas1@gmail.com
-#include <iostream>
-#include <ncurses.h>
-#include <cstring>
-#include <string>
+
 #include "game.h"
+#include <ncurses.h>
 #include <fstream>
+#include <iostream>
+#include <string>
 ///////////////////////////////////////////////////////
 //
 //      print the map of the along with the
@@ -98,7 +98,6 @@ Game::~Game() {
 //
 ///////////////////////////////////////////////////////
 void Game::print_map(std::string name_of_text_file) {
-    // int ind = 0;
     // this loop starts at the given corner where the x coodinate is
     // and continues  until width of the screen
 
@@ -113,7 +112,6 @@ void Game::print_map(std::string name_of_text_file) {
         // If the stream is in a good state the object returned can
         // be used as true
 
-        // Only write to cout if the getline did not fail.
         mvwprintw(win, 0, 1, "%s", line.c_str());
       }
     }
