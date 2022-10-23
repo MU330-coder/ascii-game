@@ -8,11 +8,11 @@
 #include <iostream>
 #include <string>
 
-///////////////////////////////////////////////////////
+/////////////////////////////////////
 //
-//     game 
+//     game
 //
-///////////////////////////////////////////////////////
+/////////////////////////////////////
 Game::Game() {
     initscr();
     cbreak();
@@ -31,71 +31,79 @@ Game::Game() {
     print_map(tmp);
 }
 
-///////////////////////////////////////////////////////
+////////////////////////////////////
 //
-//     move player 
+//     move player
 //
-///////////////////////////////////////////////////////
+////////////////////////////////////
 void Game::move_player(int in) {
-    if (in == 'l') {
-        mvwaddch(win, y, x, ' ');
-        wrefresh(win);
-        x++;
-        if (x >= this->width -2) {
-            x--;
-        }
-    }
-    if (in == 'k') {
-        /* goes to the up */
-        mvwaddch(win, y, x, ' ');
-        wrefresh(win);
-        y--;
-        if (y < 1) {
-            y++;
-        }
-    }
-    if (in == 'j') {
-        mvwaddch(win, y, x, ' ');
-        wrefresh(win);
-        y++;
-        if (y > this->height -2) {
-            y--; }
-    }
-    if (in == 'h') {
-        mvwaddch(win, y, x, ' ');
-        wrefresh(win);
-        x--;
-        if (x < 1)
+        if (in == 'l' && mvwinch(win, y, x+1) != '#') {
+            mvwaddch(win, y, x, ' ');
+            wrefresh(win);
             x++;
-    }
-    mvwaddch(win, y, x, '@');
-    wrefresh(win);
-}
+            if (x >= this->width -2) {
+                x--;
+            }
+        }
+        if (in == 'k' && mvwinch(win,y-1,x) != '#') {
+            mvwaddch(win, y, x, ' ');
+            wrefresh(win);
+            y--;
+            if (y < 1) {
+                y++;
+            }
+        }
+        if (in == 'j' && mvwinch(win,y+1,x) != '#') {
+            mvwaddch(win, y, x, ' ');
+            wrefresh(win);
+            y++;
+            if (y > this->height -2) {
+                y--; }
+        }
+        if (in == 'h' && mvwinch(win,y,x-1) != '#' ) {
+            mvwaddch(win, y, x, ' ');
+            wrefresh(win);
+            x--;
+            if (x < 1) {
+                x++;
+            }
+        }
+        char current_char = mvwinch(win, y, x);
+        if (current_char == ' ') {
+            mvwaddch(win, y, x, '@');
+            wrefresh(win);
+        }
+    } 
 
-///////////////////////////////////////////////////////
+
+
+////////////////////////////////////
 //
 //      Game Destructor
 //
-///////////////////////////////////////////////////////
+////////////////////////////////////
 Game::~Game() {
     getch();
     endwin();
 }
 
-///////////////////////////////////////////////////////
+////////////////////////////////////
 //
-//     print map 
-//      
+//     print map
 //
-///////////////////////////////////////////////////////
+////////////////////////////////////
 void Game::print_map(std::string name_of_text_file) {
-    std::ifstream stream(name_of_text_file);
-    std::string line;
 
-    while (stream) {
-    getline(stream , line);
-    if (stream) {
-        mvwprintw(win, 0, 1, "%s", line.c_str());
-      }
+    std::ifstream file(name_of_text_file);
+    std::string str; 
+    int row = 0;
+    while (std::getline(file, str)) {
+
+        mvwprintw(win, row, 1, "%s", str.c_str());
+        row++;
+        if(row == height) {
+            break;
+        }
     }
+
   }
