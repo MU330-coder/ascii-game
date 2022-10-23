@@ -45,7 +45,7 @@ void Game::move_player(int in) {
                 x--;
             }
         }
-        if (in == 'k' && mvwinch(win,y-1,x) != '#') {
+        if (in == 'k' && mvwinch(win, y-1, x) != '#') {
             mvwaddch(win, y, x, ' ');
             wrefresh(win);
             y--;
@@ -53,14 +53,14 @@ void Game::move_player(int in) {
                 y++;
             }
         }
-        if (in == 'j' && mvwinch(win,y+1,x) != '#') {
+        if (in == 'j' && mvwinch(win, y+1, x) != '#') {
             mvwaddch(win, y, x, ' ');
             wrefresh(win);
             y++;
             if (y > this->height -2) {
                 y--; }
         }
-        if (in == 'h' && mvwinch(win,y,x-1) != '#' ) {
+        if (in == 'h' && mvwinch(win, y, x-1) != '#') {
             mvwaddch(win, y, x, ' ');
             wrefresh(win);
             x--;
@@ -73,7 +73,7 @@ void Game::move_player(int in) {
             mvwaddch(win, y, x, '@');
             wrefresh(win);
         }
-    } 
+    }
 
 
 
@@ -93,17 +93,14 @@ Game::~Game() {
 //
 ////////////////////////////////////
 void Game::print_map(std::string name_of_text_file) {
-
     std::ifstream file(name_of_text_file);
-    std::string str; 
+    std::string str;
     int row = 0;
     while (std::getline(file, str)) {
-
         mvwprintw(win, row, 1, "%s", str.c_str());
         row++;
-        if(row == height) {
+        if (row == height) {
             break;
         }
     }
-
   }
