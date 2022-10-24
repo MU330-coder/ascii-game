@@ -1,5 +1,5 @@
 // Copyright 2022 Robot Locomotion Group @ CSAIL. All rights reserved.
-// All components of Drake are licensed under the GNU License.
+// All components of this software are licensed under the GNU License.
 // Programmer: Martin Montas, martinmontas1@gmail.com
 #ifndef GAME_H_
 #define GAME_H_
@@ -15,6 +15,9 @@ class Game {
 
         void move_player(int in);
 
+        void move_enemy();
+
+        void game_main(int in);
 
         void print_map(std::string name_of_text_file);
  private:

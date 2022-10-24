@@ -1,7 +1,8 @@
 // Copyright 2022 Robot Locomotion Group @ CSAIL. All rights reserved.
-// All components of Drake are licensed under the GNU License.
+// All components of this software are licensed under the GNU License.
 // Programmer: Martin Montas, martinmontas1@gmail.com
 #include <ncurses.h>
+#include <thread>
 #include "game.h"
 
 bool RUNNING;
@@ -11,12 +12,16 @@ void get_dir(Game *g) {
     if (in == 'q') {
         RUNNING = false;
     } else {
-        g->move_player(in);
+        g->game_main(in);
+        
+
+        
+
+
     }
 }
 int main() {
     RUNNING = true;
-
     Game *g = new Game;
 
     do {

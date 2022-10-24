@@ -1,10 +1,11 @@
 // Copyright 2022 Robot Locomotion Group @ CSAIL. All rights reserved.
-// All components of Drake are licensed under the GNU License.
+// All components of this software are licensed under the GNU License.
 // Programmer: Martin Montas, martinmontas1@gmail.com
 
 #include "game.h"
 #include <ncurses.h>
 #include <fstream>
+#include <thread>
 #include <iostream>
 #include <string>
 
@@ -18,6 +19,7 @@ Game::Game() {
     cbreak();
     noecho();
 
+    curs_set(0);
     width = 124;
     height = 25;
     main_y = 4, main_x = 4;
@@ -76,6 +78,31 @@ void Game::move_player(int in) {
     }
 
 
+////////////////////////////////////
+//
+//      thread: move enemy
+//
+////////////////////////////////////
+void Game::move_enemy() {
+
+    //TODO: DO THIS NEXT::
+
+
+
+}
+////////////////////////////////////
+//
+//      main game funtionality
+//
+////////////////////////////////////
+void Game::game_main(int in) {
+
+    std::thread enemy_thread(move_enemy);
+
+    enemy_thread.join();
+    move_player(in);
+
+}
 
 ////////////////////////////////////
 //
