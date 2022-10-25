@@ -6,6 +6,7 @@
 
 #include <ncurses.h>
 #include <string>
+#include <utility>
 
 class Game {
  public:
@@ -23,6 +24,7 @@ class Game {
  private:
       WINDOW *win;
       int main_x , main_y , x , y , width , height;
+      std::pair<int , int> enemy_pos[2];
 };
 #endif  // GAME_H_
 

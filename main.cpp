@@ -2,7 +2,6 @@
 // All components of this software are licensed under the GNU License.
 // Programmer: Martin Montas, martinmontas1@gmail.com
 #include <ncurses.h>
-#include <thread>
 #include "game.h"
 
 bool RUNNING;
@@ -13,11 +12,6 @@ void get_dir(Game *g) {
         RUNNING = false;
     } else {
         g->game_main(in);
-        
-
-        
-
-
     }
 }
 int main() {

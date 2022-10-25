@@ -24,14 +24,17 @@ Game::Game() {
     height = 25;
     main_y = 4, main_x = 4;
     win = newwin(height, width, main_y, main_x);
-    x = 10, y = 10;
+    x = 10, y = 8;
     keypad(win, true);
     box(win, 0, 0);
     refresh();
     wrefresh(win);
     std::string tmp = "maps/map00.txt";
     print_map(tmp);
+    refresh();
+    wrefresh(win);
 }
+
 
 ////////////////////////////////////
 //
@@ -39,44 +42,45 @@ Game::Game() {
 //
 ////////////////////////////////////
 void Game::move_player(int in) {
-        if (in == 'l' && mvwinch(win, y, x+1) != '#') {
-            mvwaddch(win, y, x, ' ');
-            wrefresh(win);
-            x++;
-            if (x >= this->width -2) {
-                x--;
-            }
-        }
-        if (in == 'k' && mvwinch(win, y-1, x) != '#') {
-            mvwaddch(win, y, x, ' ');
-            wrefresh(win);
-            y--;
-            if (y < 1) {
-                y++;
-            }
-        }
-        if (in == 'j' && mvwinch(win, y+1, x) != '#') {
-            mvwaddch(win, y, x, ' ');
-            wrefresh(win);
-            y++;
-            if (y > this->height -2) {
-                y--; }
-        }
-        if (in == 'h' && mvwinch(win, y, x-1) != '#') {
-            mvwaddch(win, y, x, ' ');
-            wrefresh(win);
+    if (in == 'l' && mvwinch(win, y, x + 1) != '#') {
+        mvwaddch(win, y, x, ' ');
+        wrefresh(win);
+        x++;
+        if (x >= this->width - 2) {
             x--;
-            if (x < 1) {
-                x++;
-            }
-        }
-        char current_char = mvwinch(win, y, x);
-        if (current_char == ' ') {
-            mvwaddch(win, y, x, '@');
-            wrefresh(win);
         }
     }
-
+    if (in == 'k' && mvwinch(win, y - 1, x) != '#') {
+        mvwaddch(win, y, x, ' ');
+        wrefresh(win);
+        y--;
+        if (y < 1) {
+            y++;
+        }
+    }
+    if (in == 'j' && mvwinch(win, y + 1, x) != '#') {
+        mvwaddch(win, y, x, ' ');
+        wrefresh(win);
+        y++;
+        if (y > this->height - 2) {
+            y--;
+        }
+    }
+    if (in == 'h' && mvwinch(win, y, x - 1) != '#') {
+        mvwaddch(win, y, x, ' ');
+        wrefresh(win);
+        x--;
+        if (x < 1) {
+            x++;
+        }
+    }
+    char current_char = mvwinch(win, y, x);
+    if (current_char == ' ') {
+        mvwaddch(win, y, x, '@');
+        refresh();
+        wrefresh(win);
+    }
+}
 
 ////////////////////////////////////
 //
@@ -84,11 +88,7 @@ void Game::move_player(int in) {
 //
 ////////////////////////////////////
 void Game::move_enemy() {
-
-    //TODO: DO THIS NEXT::
-
-
-
+    // TODO(m. montas) DO THIS NEXT:
 }
 ////////////////////////////////////
 //
@@ -96,12 +96,9 @@ void Game::move_enemy() {
 //
 ////////////////////////////////////
 void Game::game_main(int in) {
-
-    std::thread enemy_thread(move_enemy);
-
-    enemy_thread.join();
+    // std::thread enemy_thread(move_enemy);
+    // enemy_thread.join();
     move_player(in);
-
 }
 
 ////////////////////////////////////
@@ -123,11 +120,25 @@ void Game::print_map(std::string name_of_text_file) {
     std::ifstream file(name_of_text_file);
     std::string str;
     int row = 0;
+    int enemy_count = 0;
+    int pos = 0;
     while (std::getline(file, str)) {
+        for (int col = 0; col < str.size(); col++) {
+            if ((str[col] == 'A') || (str[col] == 'Z')) {
+                    // to keep with the ncurses convention  I will be using
+                    // the (y,x) on the // position of the pairs.
+                    enemy_pos[pos] = std::make_pair(row , col);
+                    pos++;
+            }
+        }
+
         mvwprintw(win, row, 1, "%s", str.c_str());
+        refresh();
+        wrefresh(win);
         row++;
         if (row == height) {
             break;
         }
     }
-  }
+}
+
