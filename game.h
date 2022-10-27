@@ -16,15 +16,15 @@ class Game {
 
         void move_player(int in);
 
-        void move_enemy();
-
         void game_main(int in);
 
+        void move_enemy();
         void print_map(std::string name_of_text_file);
  private:
       WINDOW *win;
       int main_x , main_y , x , y , width , height;
       std::pair<int , int> enemy_pos[2];
+      bool go_back;
 };
 #endif  // GAME_H_
 

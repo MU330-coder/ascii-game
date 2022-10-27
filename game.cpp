@@ -5,10 +5,8 @@
 #include "game.h"
 #include <ncurses.h>
 #include <fstream>
-#include <thread>
 #include <iostream>
 #include <string>
-
 /////////////////////////////////////
 //
 //     game
@@ -33,6 +31,10 @@ Game::Game() {
     print_map(tmp);
     refresh();
     wrefresh(win);
+    go_back = false;
+
+
+
 }
 
 
@@ -84,11 +86,26 @@ void Game::move_player(int in) {
 
 ////////////////////////////////////
 //
-//      thread: move enemy
+//       move enemy
 //
 ////////////////////////////////////
 void Game::move_enemy() {
-    // TODO(m. montas) DO THIS NEXT:
+    /*
+
+        TODO: create logic for making the enemies move
+        to the position of the main char when they are near
+        like in pacman.
+        
+    */
+    for(int enemy=0; enemy <enemy_pos.size();enemy++) {
+
+        mvwaddch(win,enemy_pos[0].first, enemy_pos[0].second - 1,'Z');
+        mvwaddch(win,enemy_pos[0].first, enemy_pos[0].second ,' ');
+        refresh();
+        wrefresh(win);
+        enemy_pos[0].second =  enemy_pos[0].second -1;
+    }
+
 }
 ////////////////////////////////////
 //
@@ -96,9 +113,10 @@ void Game::move_enemy() {
 //
 ////////////////////////////////////
 void Game::game_main(int in) {
-    // std::thread enemy_thread(move_enemy);
-    // enemy_thread.join();
+
     move_player(in);
+    move_enemy();
+
 }
 
 ////////////////////////////////////
@@ -120,11 +138,11 @@ void Game::print_map(std::string name_of_text_file) {
     std::ifstream file(name_of_text_file);
     std::string str;
     int row = 0;
-    int enemy_count = 0;
     int pos = 0;
     while (std::getline(file, str)) {
         for (int col = 0; col < str.size(); col++) {
-            if ((str[col] == 'A') || (str[col] == 'Z')) {
+            if ( str[col] == 'A' || str[col] == 'Z') {
+
                     // to keep with the ncurses convention  I will be using
                     // the (y,x) on the // position of the pairs.
                     enemy_pos[pos] = std::make_pair(row , col);

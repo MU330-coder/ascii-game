@@ -22,4 +22,4 @@ lint:
 	
 clean:
 
-	rm *.o chip8Emulator
+	rm *.o game
