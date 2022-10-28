@@ -16,16 +16,19 @@ class Game {
         void gameMain();
         void movePlayerProperly();
         bool playerCanBeMoved();
-        void moveEnemy(char enemy_char);
+        void moveZombie();
+        void moveAlien();
         void printMap(std::string name_of_text_file);
         void refreshWindow(WINDOW *win);
-        void CropBoundries();
+        bool playerNearEnemy();
+
         int in;
  private:
       WINDOW *win;
       int main_x , main_y , x , y , width , height;
-      std::pair<int , int> enemy_pos_alien[2];
-      std::pair<int , int> enemy_pos_zom[2];
+      std::pair<int, int> alienPosition[2];
+      std::pair<int, int> zombiePosition[2];
+      bool theresZombie, theresAlien, enemyNotClose;
 };
 #endif  // GAME_H_
 

@@ -7,13 +7,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-#include <array>
-
-/////////////////////////////////////
-//
-//     game
-//
-/////////////////////////////////////
+#include <unistd.h>
 Game::Game() {
   initscr();
   cbreak();
@@ -28,24 +22,14 @@ Game::Game() {
   std::string tmp = "maps/map00.txt";
   refresh();
   wrefresh(win);
-  print_map(tmp);
+  printMap(tmp);
 }
 
-////////////////////////////////////
-//
-//    refreshWindow
-//
-////////////////////////////////////
 void Game::refreshWindow(WINDOW *win) {
   refresh();
   wrefresh(win);
 }
 
-////////////////////////////////////
-//
-//    movePlayerToSpace
-//
-////////////////////////////////////
 void Game::movePlayerProperly() {
   if (in == 'l') {
     mvwaddch(win, y, x, ' ');
@@ -61,15 +45,11 @@ void Game::movePlayerProperly() {
   }
   if (in == 'h') {
     mvwaddch(win, y, x, ' ');
+    x--;
   }
   refreshWindow(win);
 }
 
-////////////////////////////////////
-//
-//   playerCanBeMoved
-//
-////////////////////////////////////
 bool Game::playerCanBeMoved() {
   if (in == 'l' && mvwinch(win, y, x + 1) != '#') {
     return true;
@@ -88,11 +68,6 @@ bool Game::playerCanBeMoved() {
 }
 
 
-////////////////////////////////////
-//
-//     move player
-//
-////////////////////////////////////
 void Game::movePlayer() {
   if (playerCanBeMoved()) {
     movePlayerProperly();
@@ -100,86 +75,97 @@ void Game::movePlayer() {
   char current_char = mvwinch(win, y, x);
   if (current_char == ' ') {
     mvwaddch(win, y, x, '@');
-    refresh();
-    wrefresh(win);
+    refreshWindow(win);
   }
 }
 
-////////////////////////////////////
-//
-//       move enemy
-//
-////////////////////////////////////
-void Game::moveEnemy(char enemy_char) {
-  /*
-          refactor the code to be less repetitive
-          TODO:
-          
-          try to create a method for each
-          type of enemy that moves each of them
-              
-  */
-  if (enemy_char = 'Z') {
-  enemy_pos_zom[0].second = enemy_pos_zom[0].second -1;
-  mvwaddch(win, enemy_pos_zom[0].first, enemy_pos_zom[0].second - 1, enemy_char);
-  refresh();
-  wrefresh(win);
+void Game::moveZombie() {
+  if (theresZombie) {
+    if (playerNearEnemy()) {
+      if (zombiePosition[0].second < x) {
+        mvwaddch(win, zombiePosition[0].first , zombiePosition[0].second, ' ');
+        mvwaddch(win, zombiePosition[0].first, zombiePosition[0].second + 1, 'Z');
+        zombiePosition[0].second = zombiePosition[0].second +1;
+        refreshWindow(win);
+      }
+      if (zombiePosition[0].second > x) {
+        mvwaddch(win, zombiePosition[0].first , zombiePosition[0].second, ' ');
+        mvwaddch(win, zombiePosition[0].first, zombiePosition[0].second - 1, 'Z');
+        zombiePosition[0].second = zombiePosition[0].second -1;
+        refreshWindow(win);
+      } else {
+        // TODO:
+        mvwaddch(win, zombiePosition[0].first, zombiePosition[0].second, ' ');
+        mvwaddch(win, zombiePosition[0].first, zombiePosition[0].second - 1, 'Z');
+        zombiePosition[0].second = zombiePosition[0].second -1;
+        refreshWindow(win);
+        }
+      }
+    }
   }
-  if (enemy_char = 'A') {
-  enemy_pos_alien[0].second = enemy_pos_alien[0].second -1;
-  mvwaddch(win, enemy_pos_alien[0].first, enemy_pos_alien[0].second - 1, enemy_char);
-  refresh();
-  wrefresh(win);
+
+
+// might need parameters
+bool Game::playerNearEnemy() {
+  if((abs(zombiePosition[0].first - y) + abs(zombiePosition[0].second - x)) <= 4) {
+    return true;
+  }
+  else {
+    return false;
+  }
+
+}
+void Game::moveAlien() {
+
+  if (theresAlien) {
+  alienPosition[0].second = alienPosition[0].second -1;
+  mvwaddch(win, alienPosition[0].first, alienPosition[0].second - 1, 'A');
+  refreshWindow(win);
   }
 }
-////////////////////////////////////
-//
-//      main game funtionality
-//
-////////////////////////////////////
-void Game::game_main() {
-  move_player();
-  move_enemy('Z');
+void Game::gameMain() {
+  movePlayer();
+  // TODO: work on this two function 
+  // that will make the enemies move
+  // towards the player.
+
+    moveZombie();
+    moveAlien();
+
 }
 
-////////////////////////////////////
-//
-//      Game Destructor
-//
-////////////////////////////////////
 Game::~Game() {
   getch();
   endwin();
 }
 
-////////////////////////////////////
-//
-//     print map
-//
-////////////////////////////////////
+
 void Game::printMap(std::string name_of_text_file) {
   std::ifstream file(name_of_text_file);
   std::string str;
   int row       = 0;
   int pos_zom   = 0;
   int pos_alien = 0;
+  theresAlien = false;
+  theresZombie = false;
   while (std::getline(file, str)) {
     for (int col = 0; col < str.size(); col++) {
       if ( str[col] == 'A' ) {
-        enemy_pos_alien[pos_alien] = std::make_pair(row, col);
+        theresAlien = true;
+        alienPosition[pos_alien] = std::make_pair(row, col);
         pos_alien++;
       }
       if ( str[col] == 'Z' ) {
-        enemy_pos_zom[pos_zom] = std::make_pair(row, col);
+        theresZombie = true;
+        zombiePosition[pos_zom] = std::make_pair(row, col);
         pos_zom++;
       }
     }
     mvwprintw(win, row, 1, "%s", str.c_str());
-    refresh();
-    wrefresh(win);
+    refreshWindow(win);
     row++;
     if (row == height) {
-      break;
+            break;
+        }
     }
-  }
 }

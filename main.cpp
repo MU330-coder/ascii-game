@@ -11,7 +11,7 @@ void get_dir(Game *g) {
     if (g->in == 'q') {
         RUNNING = false;
     } else {
-        g->game_main();
+        g->gameMain();
     }
 }
 int main() {
