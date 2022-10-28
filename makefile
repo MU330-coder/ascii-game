@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = --std=c++14 -Wall -Werror -pedantic
+CFLAGS = --std=c++14 -Wall -Werror -pedantic -g 
 LIB = -lncurses
 
 all: 	game
