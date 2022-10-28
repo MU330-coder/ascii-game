@@ -6,12 +6,12 @@
 
 bool RUNNING;
 void get_dir(Game *g) {
-    int in = getch();
+    g->in = getch();
 
-    if (in == 'q') {
+    if (g->in == 'q') {
         RUNNING = false;
     } else {
-        g->game_main(in);
+        g->game_main();
     }
 }
 int main() {
