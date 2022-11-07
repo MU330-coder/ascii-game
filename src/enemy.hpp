@@ -1,26 +1,22 @@
-#ifndef _ENEMY_H_
-#define _ENEMY_H_
-  
-#include "game.hpp"
+// Copyright 2022 Robot Locomotion Group @ CSAIL. All rights reserved.
+// All components of this software are licensed under the GNU License.
+// Programmer: Martin Montas, martinmontas1@gmail.com
+#ifndef ENEMY_HPP_
+#define ENEMY_HPP_
 #include <utility>
 #include <iostream>
+#include "game.hpp"
 
-using namespace std;
 class Enemy: private Game{
-    public:
+ public:
         void moveZombie();
         void moveAlien();
         bool mainDownPos();
         bool playerNearEnemy();
 
-        void setEnemyPos(int row,int col, int index); 
+        void setEnemyPos(int row, int col, int index);
         std::pair<int, int> getEnemyPos(int index);
- private:
-        std::pair<int, int> enemyPos[1];
-
-
-
 };
 
 
-#endif  //_ENEMY_H_
+#endif   // ENEMY_HPP_

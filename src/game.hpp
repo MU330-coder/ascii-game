@@ -1,8 +1,8 @@
 // Copyright 2022 Robot Locomotion Group @ CSAIL. All rights reserved.
 // All components of this software are licensed under the GNU License.
 // Programmer: Martin Montas, martinmontas1@gmail.com
-#ifndef GAME_H_
-#define GAME_H_
+#ifndef GAME_HPP_
+#define GAME_HPP_
 
 #include <ncurses.h>
 #include <string>
@@ -23,11 +23,10 @@ class Game {
         bool playerCanBeMoved();
         int in;
  protected:
-
         std::pair <int, int> enemyPos[2];
         WINDOW *win;
         int main_x , main_y, x, y , width, height;
         bool theresEnemy;
         char downString[25];
 };
-#endif  // GAME_H_
+#endif   // GAME_HPP_

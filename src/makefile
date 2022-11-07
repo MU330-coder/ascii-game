@@ -12,7 +12,7 @@ main.o: main.cpp
 
 	$(CC) $(CFLAGS) -c main.cpp
 
-chip8.o:   game.cpp 	game.hpp
+game.o:   game.cpp 	game.hpp
 
 	$(CC) $(CFLAGS) -c game.cpp
 
