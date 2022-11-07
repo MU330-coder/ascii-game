@@ -23,7 +23,7 @@ Game::Game() {
    box(win, 0, 0);
    refresh();
    wrefresh(win);
-   std::string tmp = "maps/map00.txt";
+   std::string tmp = "../maps/map00.txt";
    refresh();
    wrefresh(win);
    printMap(tmp);
