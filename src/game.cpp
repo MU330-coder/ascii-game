@@ -12,6 +12,11 @@
 #include "game.hpp"
 #include "enemy.hpp"
 
+///////////////////////////////
+//
+//      constructor
+//
+///////////////////////////////
 Game::Game() {
     initscr();
     cbreak();
@@ -29,6 +34,11 @@ Game::Game() {
     printMap(tmp);
 }
 
+///////////////////////////////
+//
+//      destructor
+//
+///////////////////////////////
 Game::~Game() {
     getch(); endwin();
 }
@@ -37,6 +47,11 @@ void Game::refreshWindow(WINDOW *win) {
     wrefresh(win);
 }
 
+///////////////////////////////
+//
+//      destructor
+//
+///////////////////////////////
 void Game::movePlayerProperly() {
     if (in == 'l') {
         mvwaddch(win, y, x, ' ');
@@ -57,6 +72,11 @@ void Game::movePlayerProperly() {
     refreshWindow(win);
 }
 
+///////////////////////////////
+//
+//      playerCanBeMoved
+//
+///////////////////////////////
 bool Game::playerCanBeMoved() {
     if (in == 'l' && mvwinch(win, y, x + 1) != '#') {
         return true;
@@ -75,8 +95,11 @@ bool Game::playerCanBeMoved() {
 }
 
 
-
-
+///////////////////////////////
+//
+//      movePlayer
+//
+///////////////////////////////
 void Game::movePlayer() {
     if (playerCanBeMoved()) {
         movePlayerProperly();
@@ -87,11 +110,21 @@ void Game::movePlayer() {
         refreshWindow(win);
     }
 }
+///////////////////////////////
+//
+//      gameMain
+//
+///////////////////////////////
 void Game::gameMain() {
     movePlayer();
 }
 
 
+///////////////////////////////
+//
+//      printMap
+//
+///////////////////////////////
 void Game::printMap(std::string name_of_text_file) {
     std::ifstream file(name_of_text_file);
     std::string str;

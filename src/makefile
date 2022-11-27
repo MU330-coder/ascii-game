@@ -4,7 +4,7 @@ LIB = -lncurses
 
 all: 	game
 
-game:   main.o   game.o enemy.o
+game:   main.o   game.o enemy.o 
 
 	$(CC) $(CFLAGS) main.o game.o enemy.o -o game $(LIB)
 
@@ -19,6 +19,7 @@ game.o:   game.cpp 	game.hpp
 enemy.o:	enemy.cpp  enemy.hpp
 
 	$(CC) $(CFLAGS) -c enemy.cpp
+
 
 lint:
 

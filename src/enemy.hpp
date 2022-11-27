@@ -6,17 +6,31 @@
 #include <utility>
 #include <iostream>
 #include "game.hpp"
+#include <queue>
+#include <utility>
 
-class Enemy: private Game{
+class Enemy: private Game {
  public:
-        void moveZombie();
-        void moveAlien();
-        bool mainDownPos();
+        void bfs();
         bool playerNearEnemy();
+        void bfs(std::pair<int,int> s , std::pair<int, int>e);
+        std::vector<std::vector<std::pair<int, int>>>   solve(std::pair <int ,int >s); 
+        void reconstructPath(std::pair<int ,int> s, std::pair<int,int> e); 
+        void exploreNeighbours(int qY,int qX,int dc[4],int dr[4]);
+        bool canFindNeighbour();
+        void getNeighbours(int qY,int qX);
+ private:
+        std::pair<int,int> node;
+        std::queue<int> queueWidth;
+        std::queue<int> queueHeight;
+        bool reachEnd;
+        int rr,cc;
+        std::vector<std::pair<int,int>> neigh;
+        std::vector <std::vector<bool>> visited;
+        
+        
 
-        void setEnemyPos(int row, int col, int index);
-        std::pair<int, int> getEnemyPos(int index);
 };
 
 
-#endif   // ENEMY_HPP_
+#endif  // ENEMY_HPP_

@@ -4,8 +4,6 @@
 #include <ncurses.h>
 #include "game.hpp"
 
-
-
 bool RUNNING;
 void get_dir(Game *g) {
     g->in = getch();
