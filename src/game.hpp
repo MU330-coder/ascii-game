@@ -22,15 +22,13 @@ class Game  {
         void enemyCharSetter(int y, int x, int index) {
                enemyPos[index] = std::make_pair(y, x);
                }
+
         void widthHeightSetter(int w, int h) {width = w, height = h;}
         void updateHealthPoints(WINDOW *win, int val);
         void updateArmorPoints(WINDOW *win, int val);
-        void mainCharSetterX(int a) { x = a;}
-        void mainCharSetterY(int b) { y = b;}
-        int  mainCharGetterX() { return x;}
-        int  mainCharGetterY() { return y;}
  protected:
         WINDOW *win;
+        int x, y;
         bool theresEnemy;
         int main_x, main_y, width , height, rr, cc;
         bool theresZombie, theresAlien, enemyNotClose;
@@ -38,6 +36,5 @@ class Game  {
 
  private:
         std::pair <int, int>enemyPos[2];
-        int x, y;
 };
 #endif  // GAME_HPP_

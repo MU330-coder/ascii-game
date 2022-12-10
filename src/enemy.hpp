@@ -2,6 +2,7 @@
 // All rights reserved.
 // All components of this software are licensed under the GNU License.
 // Programmer: Martin Montas, martinmontas1@gmail.com
+
 #ifndef ENEMY_HPP_
 #define ENEMY_HPP_
 #include <iostream>

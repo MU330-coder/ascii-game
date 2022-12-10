@@ -8,7 +8,6 @@
 
 class Player: private Game {
  public:
-        Player();
         void movePlayerProperly();
         bool playerCanBeMove();
         void movePlayer();
@@ -18,7 +17,6 @@ class Player: private Game {
         int  mainCharGetterY() { return y;}
         int in;
  protected:
-        int x, y;
 };
 
 #endif  // PLAYER_HPP_

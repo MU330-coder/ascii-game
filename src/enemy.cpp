@@ -9,12 +9,10 @@
 #include "enemy.hpp"
 #include "game.hpp"
 
-///////////////////////////////
-//
-//      getNeighbours
-//
-///////////////////////////////
 std::vector<std::pair<int, int>>  Enemy::getNeighbours(int qY, int qX) {
+    // gets all the current neighbours adjent to the
+    // position given and returns a vector of pairs
+    // with each position
     std::vector<std::pair<int, int>> neighbours;
     int dr[4] = {-1, 1, 0, 0};
     int dc[4] = {0, 0, 1 , -1};
@@ -29,17 +27,13 @@ std::vector<std::pair<int, int>>  Enemy::getNeighbours(int qY, int qX) {
     }
     return neighbours;
 }
-///////////////////////////////
-//
-//      solve
-//
-///////////////////////////////
 std::vector<std::vector<std::pair<int, int>>>
 Enemy::solve(std::pair <int, int> s) {
+    // does the heavy lifting of the bfs algo 
+    // returns an vector of vector with the correct 
+    // algo position
+
     reachEnd = false;
-
-    // std::pair<int ,int >dimen = width
-
     for (int i =0; i< height; i++) {
         std::vector<std::pair<int, int>> tmpVec;
         for (int j =0; j< width; j++) {
@@ -62,8 +56,6 @@ Enemy::solve(std::pair <int, int> s) {
         int qY = queueHeight.front();
         int qX = queueWidth.front();
 
-        int x = mainCharGetterX();
-        int y = mainCharGetterY();
         if ((qY ==  y)  && (qX == x)) {
             reachEnd = true;
             break;
@@ -83,11 +75,6 @@ Enemy::solve(std::pair <int, int> s) {
     }
     return prev;
 }
-///////////////////////////////
-//
-//      reconstructPath
-//
-///////////////////////////////
 std::vector<std::vector<std::pair<int, int>>>
 Enemy::recons(std::pair<int, int> s, std::pair<int, int> e) {
     std::vector<std::vector<std::pair<int, int>>> path;
@@ -110,15 +97,10 @@ Enemy::recons(std::pair<int, int> s, std::pair<int, int> e) {
     return path;
 }
 
-///////////////////////////////
-//
-//      bfs
-//
-///////////////////////////////
 std::vector<std::vector<std::pair<int, int>>>  Enemy::bfs() {
     std::pair <int, int> s = enemyCharGetter(0);
-    int y = mainCharGetterY();
-    int x = mainCharGetterX();
+    // int y = mainCharGetterY();
+    // int x = mainCharGetterX();
     std::pair<int, int> e = std::make_pair(y, x);
     auto prev = solve(s);
     // auto path = reconstructPath(s,e,prev);

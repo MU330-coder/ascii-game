@@ -3,85 +3,59 @@
 // Programmer: Martin Montas, martinmontas1@gmail.com
 #include "player.hpp"
 #include <ncurses.h>
-///////////////////////////////
-//
-//      constructor
-//
-///////////////////////////////
-Player::Player() {
-}
 
-///////////////////////////////
-//
-//      movePlayerProperly
-//
-///////////////////////////////
-void Player::movePlayerProperly() {
-    int y_ = mainCharGetterY();
-    int x_ = mainCharGetterX();
-    if (in == 'l') {
-        mvwaddch(win, y_, x_, '.');
-        x_++;
-        mainCharSetterX(x_);
-    }
-    if (in == 'k') {
-        mvwaddch(win, y_, x_, '.');
-        y_--;
-        mainCharSetterY(y_);
-    }
-    if (in == 'j') {
-        mvwaddch(win, y_, x_, '.');
-        y_++;
-        mainCharSetterY(y_);
-    }
-    if (in == 'h') {
-        mvwaddch(win, y_, x_, '.');
-        x_--;
-        mainCharSetterX(x_);
-    }
-    refresh();
-    wrefresh(win);
-}
 
-///////////////////////////////
-//
-//      playerCanBeMove
-//
-///////////////////////////////
+
 bool Player::playerCanBeMove() {
-    int x_ = mainCharGetterX();
-    int y_ = mainCharGetterY();
-    if (in == 'l' && mvwinch(win, y_, x_ + 1) != '#') {
+    // returns true if the given player can 
+    // move true the gven path
+    //
+    if (in == 'l' && mvwinch(win, y, x + 1) != '#') {
         return true;
     }
-    if (in == 'k' && mvwinch(win, y_ - 1, x_) != '#') {
+    if (in == 'k' && mvwinch(win, y - 1, x) != '#') {
         return true;
     }
-    if (in == 'j' && mvwinch(win, y_ + 1, x_) != '#') {
+    if (in == 'j' && mvwinch(win, y + 1, x) != '#') {
         return true;
     }
-    if (in == 'h' && mvwinch(win, y_, x_ - 1) != '#') {
+    if (in == 'h' && mvwinch(win, y, x - 1) != '#') {
         return true;
     } else {
         return false;
     }
 }
 
-///////////////////////////////
-//
-//      movePlayer
-//
-///////////////////////////////
+void Player::movePlayerProperly() {
+    // advances the main char position
+    // dependent on the in variable
+    mvwaddch(win, y, x, ' ');
+    if (in == 'l') {
+        x++;
+    }
+    if (in == 'k') {
+        y--;
+    }
+    if (in == 'j') {
+        y++;
+    }
+    if (in == 'h') {
+        x--;
+    }
+    refresh();
+    wrefresh(win);
+}
+
 void Player::movePlayer() {
+    // moves the player to the given place
     if (playerCanBeMove()) {
         movePlayerProperly();
     }
-    int x_ = mainCharGetterX();
-    int y_ = mainCharGetterY();
-    char current_char = mvwinch(win, y_, x_);
-    if (current_char == '.') {
-        mvwaddch(win, y_, x_, '@');
+    unsigned int current_char = mvwinch(win, y, x);
+     if (current_char == ' ') {
+        mvwaddch(win, y, x, '@');
         refresh();
         wrefresh(win);
+        }
     }
-}
+

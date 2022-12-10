@@ -7,9 +7,8 @@
 #include "player.hpp"
 
 bool RUNNING;
-void moveMainChar() {
-    Player  *p = new Player;
-    p->in = getch();
+void moveMainChar(Player *p) {
+    p->in =   getch();
     if (p->in == 'q') {
         RUNNING = false;
     } else {
@@ -23,12 +22,14 @@ void moveEnemyChar() {
 }
 */
 int main() {
-    RUNNING = true;
-    Game *g =  new Game;
+    RUNNING    = true;
+    Game    *g =  new Game;
+    Player  *p = new Player;
     do {
-        moveMainChar();
+        moveMainChar(p);
         // moveEnemyChar();
         }while(RUNNING);
     g->~Game();
     return 0;
 }
+
